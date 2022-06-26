@@ -1,6 +1,6 @@
-Football Manager API
+# Football Manager API
 
-API for a simple application where football/soccer fans will create fantasy teams and will be able to sell or buy players.
+## API for a simple application where football/soccer fans will create fantasy teams and will be able to sell or buy players.
 - User will be able to create an account and log in using the API.
 - Each user can have only one team (user is identified by an email)
 - When the user is signed up, they get a team of 20 players (the system should generate players):
