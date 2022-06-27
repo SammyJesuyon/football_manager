@@ -51,3 +51,24 @@ class LogoutView(generics.GenericAPIView):
     def get(self, request):
         request.user.auth_token.delete()
         return Response(data={"success": "You've been logged out"}, status=status.HTTP_200_OK)
+    
+class TeamListView(generics.ListAPIView):
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+class PlayersListView(generics.ListAPIView):
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class TransferView(generics.CreateAPIView):
+    serializer_class = TransferSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

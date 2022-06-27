@@ -1,3 +1,4 @@
+from multiprocessing import Value
 from rest_framework import serializers
 from .models import *
 
@@ -19,3 +20,22 @@ class RegisterSerializer(serializers.ModelSerializer):
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length=255)
     password = serializers.CharField()
+    
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = '__all__'
+        
+class PlayerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Player
+        fields = '__all__'
+    
+class TransferSerializer(serializers.Serializer):
+    player = serializers.ChoiceField(choices=Player.objects.all())
+    player_value = serializers.DecimalField(max_digits=20, decimal_places=2, 
+                                        default = Player.objects.all().values)
+    transferred_from = serializers.CharField(default=Team.objects.all())
+    transferred_to = serializers.ChoiceField(choices=Team.objects.all())
+    
+    
